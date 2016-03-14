@@ -5,7 +5,7 @@ package com.ramitsuri.project1;
  */
 public class RBNode {
 
-    RBNode left, right, parent;
+    public  RBNode left, right, parent;
     Event event = new Event(-1,0);
     boolean color;
 
@@ -13,9 +13,9 @@ public class RBNode {
 
         this.color = Color.BLACK;
         this.event = event;
-        this.left = this;
-        this.right = this;
-        this.parent = this;
+        this.left = RBTree.nil;
+        this.right = RBTree.nil;
+        this.parent = RBTree.nil;
 
     }
 

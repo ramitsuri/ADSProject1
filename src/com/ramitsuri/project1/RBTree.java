@@ -8,57 +8,53 @@ import java.util.Scanner;
 
 public class RBTree {
 
-    private final RBNode nil = new RBNode(new Event(-1,0));
+    public static RBNode nil = new RBNode(new Event(-1,0));
     private RBNode root = nil;
 
-    private RBNode findNode(RBNode nodeToFind, RBNode node){
-        int compare = nodeToFind.compare(node);
-
-        if(root == nil)
+    private RBNode findNode(RBNode findNode, RBNode node) {
+        if (root == nil) {
             return null;
+        }
 
-        if(compare < 0){
-            if(node.left != nil)
-                return findNode(nodeToFind, node.left);
-        }
-        else if(compare > 0){
-            if(node.right != nil)
-                return findNode(nodeToFind, node.right);
-        }
-        else if(compare == 0)
+        if (findNode.event.ID < node.event.ID) {
+            if (node.left != nil) {
+                return findNode(findNode, node.left);
+            }
+        } else if (findNode.event.ID > node.event.ID) {
+            if (node.right != nil) {
+                return findNode(findNode, node.right);
+            }
+        } else if (findNode.event.ID == node.event.ID) {
             return node;
-
+        }
         return null;
     }
 
-    
-    private void insert(RBNode node){
+    private void insert(RBNode node) {
         RBNode temp = root;
-        if(root == nil){
+        if (root == nil) {
             root = node;
             node.color = Color.BLACK;
             node.parent = nil;
-        }
-        else{
+        } else {
             node.color = Color.RED;
-            while(true){
-                if(node.compare(temp)<0){
-                    if(temp.left == nil){
+            while (true) {
+                if (node.event.ID < temp.event.ID) {
+                    if (temp.left == nil) {
                         temp.left = node;
                         node.parent = temp;
                         break;
-                    }
-                    else
+                    } else {
                         temp = temp.left;
-                }
-                else if(node.compare(temp) == 0 || node.compare(temp) > 0){
-                    if(temp.right == nil){
+                    }
+                } else if (node.event.ID >= temp.event.ID) {
+                    if (temp.right == nil) {
                         temp.right = node;
                         node.parent = temp;
                         break;
-                    }
-                    else
+                    } else {
                         temp = temp.right;
+                    }
                 }
             }
             fixTree(node);
@@ -66,85 +62,69 @@ public class RBTree {
     }
 
 
-    private void fixTree(RBNode node){
-        while(node.parent.color == Color.RED){
+
+    private void fixTree(RBNode node) {
+        while (node.parent.color == Color.RED) {
             RBNode uncle = nil;
-            if(node.parent == node.parent.parent.left){
+            if (node.parent == node.parent.parent.left) {
                 uncle = node.parent.parent.right;
-                if(uncle != nil && uncle.color == Color.RED){
+
+                if (uncle != nil && uncle.color == Color.RED) {
                     node.parent.color = Color.BLACK;
                     uncle.color = Color.BLACK;
                     node.parent.parent.color = Color.RED;
                     node = node.parent.parent;
                     continue;
                 }
-                if(node == node.parent.right){
+                if (node == node.parent.right) {
+                    //Double rotation needed
                     node = node.parent;
                     rotateLeft(node);
                 }
                 node.parent.color = Color.BLACK;
                 node.parent.parent.color = Color.RED;
+                //if the "else if" code hasn't executed, this
+                //is a case where we only need a single rotation
                 rotateRight(node.parent.parent);
-            }
-            else{
+            } else {
                 uncle = node.parent.parent.left;
-                if(uncle != nil && uncle.color == Color.RED){
+                if (uncle != nil && uncle.color == Color.RED) {
                     node.parent.color = Color.BLACK;
                     uncle.color = Color.BLACK;
                     node.parent.parent.color = Color.RED;
                     node = node.parent.parent;
                     continue;
                 }
-                if(node == node.parent.left){
+                if (node == node.parent.left) {
+                    //Double rotation needed
                     node = node.parent;
                     rotateRight(node);
                 }
                 node.parent.color = Color.BLACK;
                 node.parent.parent.color = Color.RED;
+                //if the "else if" code hasn't executed, this
+                //is a case where we only need a single rotation
                 rotateLeft(node.parent.parent);
             }
         }
         root.color = Color.BLACK;
     }
 
-    private void rotateRight(RBNode node) {
+    void rotateLeft(RBNode node) {
         if (node.parent != nil) {
-            if (node == node.parent.left)
-                node.parent.left = node.left;
-            else
-                node.parent.right = node.left;
-
-            node.left.parent = node.parent;
-            node.parent = node.left;
-            if (node.left.right != nil)
-                node.left.right.parent = node;
-            node.left = node.left.right;
-            node.parent.right = node;
-        } else {
-            RBNode left = root.left;
-            root.left = root.left.right;
-            left.right.parent = root;
-            root.parent = left;
-            left.right = root;
-            left.parent = nil;
-            root = left;
-        }
-    }
-
-    private void rotateLeft(RBNode node) {
-        if (node.parent != nil) {
-            if (node == node.parent.left)
+            if (node == node.parent.left) {
                 node.parent.left = node.right;
-            else
+            } else {
                 node.parent.right = node.right;
-
+            }
             node.right.parent = node.parent;
             node.parent = node.right;
-            if (node.right.left != nil)
+            if (node.right.left != nil) {
                 node.right.left.parent = node;
+            }
             node.right = node.right.left;
             node.parent.left = node;
-        } else {
+        } else {//Need to rotate root
             RBNode right = root.right;
             root.right = right.left;
             right.left.parent = root;
@@ -155,21 +135,46 @@ public class RBTree {
         }
     }
 
+    void rotateRight(RBNode node) {
+        if (node.parent != nil) {
+            if (node == node.parent.left) {
+                node.parent.left = node.left;
+            } else {
+                node.parent.right = node.left;
+            }
+
+            node.left.parent = node.parent;
+            node.parent = node.left;
+            if (node.left.right != nil) {
+                node.left.right.parent = node;
+            }
+            node.left = node.left.right;
+            node.parent.right = node;
+        } else {//Need to rotate root
+            RBNode left = root.left;
+            root.left = root.left.right;
+            left.right.parent = root;
+            root.parent = left;
+            left.right = root;
+            left.parent = nil;
+            root = left;
+        }
+    }
+
     void transplant(RBNode target, RBNode with){
-        if(target.parent == nil)
+        if(target.parent == nil){
             root = with;
-        else if(target == target.parent.left)
+        }else if(target == target.parent.left){
             target.parent.left = with;
-        else
+        }else
             target.parent.right = with;
         with.parent = target.parent;
     }
 
     boolean delete(RBNode z){
-        if((z = findNode(z, root))==null)
-            return false;
+        if((z = findNode(z, root))==null)return false;
         RBNode x;
-        RBNode y = z;
+        RBNode y = z; // temporary reference y
         boolean y_original_color = y.color;
 
         if(z.left == nil){
