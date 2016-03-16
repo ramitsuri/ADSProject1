@@ -10,8 +10,17 @@ public class RBTree {
 
     public static RBNode nil = new RBNode(new Event(-1,0));
     private RBNode root = nil;
+    private static RBTree instance = null;
 
-    private RBNode findNode(RBNode findNode, RBNode node) {
+    public static RBTree getInstance(){
+        if(instance == null)
+            return new RBTree();
+        else
+            return instance;
+    }
+
+
+    public RBNode findNode(RBNode findNode, RBNode node) {
         if (root == nil) {
             return null;
         }
@@ -30,7 +39,8 @@ public class RBTree {
         return null;
     }
 
-    private void insert(RBNode node) {
+    public void insert(Event event) {
+        RBNode node = new RBNode(event);
         RBNode temp = root;
         if (root == nil) {
             root = node;
@@ -63,7 +73,7 @@ public class RBTree {
 
 
 
-    private void fixTree(RBNode node) {
+    public void fixTree(RBNode node) {
         while (node.parent.color == Color.RED) {
             RBNode uncle = nil;
             if (node.parent == node.parent.parent.left) {
@@ -110,7 +120,7 @@ public class RBTree {
         root.color = Color.BLACK;
     }
 
-    void rotateLeft(RBNode node) {
+    private void rotateLeft(RBNode node) {
         if (node.parent != nil) {
             if (node == node.parent.left) {
                 node.parent.left = node.right;
@@ -135,7 +145,7 @@ public class RBTree {
         }
     }
 
-    void rotateRight(RBNode node) {
+    private void rotateRight(RBNode node) {
         if (node.parent != nil) {
             if (node == node.parent.left) {
                 node.parent.left = node.left;
@@ -161,7 +171,7 @@ public class RBTree {
         }
     }
 
-    void transplant(RBNode target, RBNode with){
+    private void transplant(RBNode target, RBNode with){
         if(target.parent == nil){
             root = with;
         }else if(target == target.parent.left){
@@ -171,7 +181,7 @@ public class RBTree {
         with.parent = target.parent;
     }
 
-    boolean delete(RBNode z){
+    public boolean delete(RBNode z){
         if((z = findNode(z, root))==null)return false;
         RBNode x;
         RBNode y = z; // temporary reference y
@@ -263,7 +273,7 @@ public class RBTree {
         x.color = Color.BLACK;
     }
 
-    void deleteTree(){
+    public void deleteTree(){
         root = nil;
     }
 
@@ -277,7 +287,7 @@ public class RBTree {
         printTree(node.right);
     }
 
-    RBNode treeMinimum(RBNode subTreeRoot){
+    public RBNode treeMinimum(RBNode subTreeRoot){
         while(subTreeRoot.left!=nil){
             subTreeRoot = subTreeRoot.left;
         }
@@ -285,7 +295,7 @@ public class RBTree {
     }
 
 
-    public void consoleUI() {
+    /*public void consoleUI() {
         Scanner scan = new Scanner(System.in);
         while (true) {
             System.out.println("\n1.- Add items\n"
@@ -343,15 +353,15 @@ public class RBTree {
 
 
     public static void main(String args[]){
-        /*Event event = new Event(-1,0);
+        *//*Event event = new Event(-1,0);
         final RBNode nil = new RBNode(event);
 
         RBNode nil2 = new RBNode(new Event(-1,0));
-        System.out.println(nil.compare(nil2));*/
+        System.out.println(nil.compare(nil2));*//*
 
         RBTree rbt = new RBTree();
         rbt.consoleUI();
 
-    }
+    }*/
 
 }
