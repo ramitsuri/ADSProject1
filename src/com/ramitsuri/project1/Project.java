@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-/**
- * Created by ramitsuri on 3/15/16.
- */
 public class Project {
 
     public static void initialize(Event[] events){
@@ -16,14 +13,14 @@ public class Project {
         }
     }
 
-    public static int increaseCountForId(int id, int increaseBy){
+    public static int increaseCountForID(int id, int increaseBy){
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
         node.setCountForEvent(node.event.count + increaseBy);
         return node.event.getCount();
     }
 
-    public static int reduceCountForId(int id, int decreaseBy){
+    public static int reduceCountForID(int id, int decreaseBy){
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
         if((node.event.getCount() - decreaseBy) <= 0)
@@ -33,6 +30,11 @@ public class Project {
         return node.event.getCount();
     }
 
+    public static int getCountForEventID(int id){
+        RBTree rbTree = RBTree.getInstance();
+        RBNode node = rbTree.findNode(id, rbTree.root);
+        return node.event.getCount();
+    }
     public static Event[] readFile(String fileName){
         Event[] events = null;
 
@@ -61,10 +63,11 @@ public class Project {
 
         Event [] events = readFile(args[0]);
         initialize(events);
-        int newCount = increaseCountForId(12,3);
-        int newCount2 = reduceCountForId(12,3);
+        int newCount = increaseCountForID(12,3);
+        int newCount2 = reduceCountForID(12,10);
         RBTree rbTree = RBTree.getInstance();
-        rbTree.deleteNodeWithID(12);
+        RBNode node1 = rbTree.findNode(17, rbTree.root);
+        //rbTree.deleteNodeWithID(12);
         RBNode node = rbTree.findNode(12, rbTree.root);
         String a = "";
     }
