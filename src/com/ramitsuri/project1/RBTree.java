@@ -168,7 +168,7 @@ public class RBTree {
             root = left;
         }
     }
-/*
+
     private void transplant(RBNode target, RBNode with){
         if(target.parent == nil){
             root = with;
@@ -179,33 +179,35 @@ public class RBTree {
         with.parent = target.parent;
     }
 
-    public boolean delete(RBNode z){
-        if((z = findNode(z, root))==null)return false;
+    public boolean delete(int z){
+        RBNode node = findNode(z, root);
+        if(node == null)
+            return false;
         RBNode x;
-        RBNode y = z; // temporary reference y
+        RBNode y = node; // temporary reference y
         boolean y_original_color = y.color;
 
-        if(z.left == nil){
-            x = z.right;
-            transplant(z, z.right);
-        }else if(z.right == nil){
-            x = z.left;
-            transplant(z, z.left);
+        if(node.left == nil){
+            x = node.right;
+            transplant(node, node.right);
+        }else if(node.right == nil){
+            x = node.left;
+            transplant(node, node.left);
         }else{
-            y = treeMinimum(z.right);
+            y = treeMinimum(node.right);
             y_original_color = y.color;
             x = y.right;
-            if(y.parent == z)
+            if(y.parent == node)
                 x.parent = y;
             else{
                 transplant(y, y.right);
-                y.right = z.right;
+                y.right = node.right;
                 y.right.parent = y;
             }
-            transplant(z, y);
-            y.left = z.left;
+            transplant(node, y);
+            y.left = node.left;
             y.left.parent = y;
-            y.color = z.color;
+            y.color = node.color;
         }
         if(y_original_color==Color.BLACK)
             deleteFixup(x);
@@ -290,7 +292,7 @@ public class RBTree {
             subTreeRoot = subTreeRoot.left;
         }
         return subTreeRoot;
-    }*/
+    }
 
 
     /*public void consoleUI() {

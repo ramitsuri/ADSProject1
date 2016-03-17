@@ -63,6 +63,9 @@ public class Project {
         initialize(events);
         int newCount = increaseCountForId(12,3);
         int newCount2 = reduceCountForId(12,3);
+        RBTree rbTree = RBTree.getInstance();
+        rbTree.delete(12);
+        RBNode node = rbTree.findNode(12, rbTree.root);
         String a = "";
     }
 
