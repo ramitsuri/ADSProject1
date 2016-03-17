@@ -109,7 +109,7 @@ public class Project {
 
         Event [] events = readFile(args[0]);
         initialize(events);
-        //int newCount = increaseCountForID(12,3);
+        /*//int newCount = increaseCountForID(12,3);
         //int newCount2 = reduceCountForID(12,10);
         RBTree rbTree = RBTree.getInstance();
         //RBNode node1 = rbTree.findNode(17, rbTree.root);
@@ -118,7 +118,18 @@ public class Project {
         System.out.println(getCountOfEventsInRange(13,13));
         getNextEvent(87);
         getPreviousEvent(87);
-        String a = "";
+        String a = "";*/
+
+        System.out.println("Tree is ready. Input Command.");
+        System.out.println("For reference:");
+        System.out.println("Command 'increase <int1> <int2>' increases the count of Event with ID int1 by int2 and prints the new count");
+        System.out.println("Command 'reduce <int1> <int2>' reduces the count of Event with ID int1 by int2 and prints the new count");
+        System.out.println("Command 'count <int1>' prints the count of Event with ID int1");
+        System.out.println("Command 'inrange <int1> <int2>' prints the count of Events falling in the range int1 and int2, both included ");
+        System.out.println("Command 'next <int1>' prints the Event with ID which is just next to int1");
+        System.out.println("Command 'previous <int1>' prints the Event with ID which is just previous to int1");
+        System.out.println("Enter command 'quit' to exit the program");
+
     }
 
 }
