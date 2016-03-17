@@ -59,6 +59,17 @@ public class Project {
 
     }
 
+    public static Event getNextEvent(int id){
+        RBTree rbTree = RBTree.getInstance();
+        RBNode node = rbTree.findNode(id, rbTree.root);
+        node = node.right.left;
+        while(node.left!=null && node.left.event.ID != -1){
+            node = node.left;
+        }
+        String a = "";
+        return node.event;
+    }
+
     public static Event[] readFile(String fileName){
         Event[] events = null;
 
@@ -94,6 +105,7 @@ public class Project {
         //rbTree.deleteNodeWithID(12);
         //RBNode node = rbTree.findNode(12, rbTree.root);
         System.out.println(getCountOfEventsInRange(13,13));
+        getNextEvent(87);
         String a = "";
     }
 
