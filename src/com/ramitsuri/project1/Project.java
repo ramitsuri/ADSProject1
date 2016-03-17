@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Project {
 
@@ -40,7 +43,6 @@ public class Project {
 
     public static ArrayList<Event> getEventsInRange(ArrayList<Event> events, RBNode node, int id1, int id2){
 
-
         if(node == null)
             return events;
         if(id1 <= node.event.ID)
@@ -56,7 +58,6 @@ public class Project {
         RBTree rbTree = RBTree.getInstance();
         ArrayList<Event> events = new ArrayList<>();
         return getEventsInRange(events, rbTree.root, id1, id2).size();
-
     }
 
     public static Event getNextEvent(int id){
@@ -66,7 +67,6 @@ public class Project {
         while(node.left!=null && node.left.event.ID != -1){
             node = node.left;
         }
-        String a = "";
         return node.event;
     }
 
@@ -77,13 +77,11 @@ public class Project {
         while(node.right!=null && node.right.event.ID != -1){
             node = node.right;
         }
-        String a = "";
         return node.event;
     }
 
     public static Event[] readFile(String fileName){
         Event[] events = null;
-
         try {
 
             BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -109,17 +107,6 @@ public class Project {
 
         Event [] events = readFile(args[0]);
         initialize(events);
-        /*//int newCount = increaseCountForID(12,3);
-        //int newCount2 = reduceCountForID(12,10);
-        RBTree rbTree = RBTree.getInstance();
-        //RBNode node1 = rbTree.findNode(17, rbTree.root);
-        //rbTree.deleteNodeWithID(12);
-        //RBNode node = rbTree.findNode(12, rbTree.root);
-        System.out.println(getCountOfEventsInRange(13,13));
-        getNextEvent(87);
-        getPreviousEvent(87);
-        String a = "";*/
-
         System.out.println("Tree is ready. Input Command.");
         System.out.println("For reference:");
         System.out.println("Command 'increase <int1> <int2>' increases the count of Event with ID int1 by int2 and prints the new count");
@@ -129,6 +116,60 @@ public class Project {
         System.out.println("Command 'next <int1>' prints the Event with ID which is just next to int1");
         System.out.println("Command 'previous <int1>' prints the Event with ID which is just previous to int1");
         System.out.println("Enter command 'quit' to exit the program");
+
+        Scanner scanner = new Scanner(System.in);
+        String line = scanner.nextLine();
+        String command = line.split(" ")[0];
+        switch(command){
+            case "increase": {
+                String input = command.split(" ")[1];
+                int id = Integer.parseInt(input.split(" ")[0]);
+                int increaseBy = Integer.parseInt(input.split(" ")[1]);
+                System.out.println(increaseCountForID(id, increaseBy));
+                break;
+            }
+            case "reduce": {
+                String input = command.split(" ")[1];
+                int id = Integer.parseInt(input.split(" ")[0]);
+                int reduceBy = Integer.parseInt(input.split(" ")[1]);
+                System.out.println(reduceCountForID(id, reduceBy));
+                break;
+            }
+
+            case "count": {
+                String input = command.split(" ")[1];
+                int id = Integer.parseInt(input);
+                System.out.println(getCountForEventID(id));
+                break;
+            }
+
+            case "inrange":{
+                String input = command.split(" ")[1];
+                int idLow = Integer.parseInt(input.split(" ")[0]);
+                int idHigh = Integer.parseInt(input.split(" ")[1]);
+                System.out.println(getCountOfEventsInRange(idLow, idHigh));
+                break;
+            }
+
+            case "next": {
+                String input = command.split(" ")[1];
+                int id = Integer.parseInt(input);
+                System.out.println(getNextEvent(id));
+                break;
+            }
+
+            case "previous": {
+                String input = command.split(" ")[1];
+                int id = Integer.parseInt(input);
+                System.out.println(getPreviousEvent(id));
+                break;
+            }
+
+            case "quit": {
+                System.out.println("Exiting");
+                System.exit(0);
+            }
+        }
 
     }
 
