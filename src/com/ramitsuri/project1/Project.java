@@ -11,14 +11,14 @@ import java.util.regex.Pattern;
 
 public class Project {
 
-    public static void initialize(Event[] events) {
+    private void initialize(Event[] events) {
         RBTree rbTree = RBTree.getInstance();
         for (Event event : events) {
             rbTree.insert(event);
         }
     }
 
-    public static int increaseCountForID(int id, int increaseBy) {
+    private int increaseCountForID(int id, int increaseBy) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
         if (node != null) {
@@ -28,7 +28,7 @@ public class Project {
             return -1;
     }
 
-    public static int reduceCountForID(int id, int decreaseBy) {
+    private int reduceCountForID(int id, int decreaseBy) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
         if (node != null) {
@@ -41,7 +41,7 @@ public class Project {
             return -1;
     }
 
-    public static int getCountForEventID(int id) {
+    private int getCountForEventID(int id) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
         if (node != null)
@@ -50,7 +50,7 @@ public class Project {
             return -1;
     }
 
-    public static ArrayList<Event> getEventsInRange(ArrayList<Event> events, RBNode node, int id1, int id2) {
+    private ArrayList<Event> getEventsInRange(ArrayList<Event> events, RBNode node, int id1, int id2) {
 
         if (node == null)
             return events;
@@ -63,13 +63,13 @@ public class Project {
         return events;
     }
 
-    public static int getCountOfEventsInRange(int id1, int id2) {
+    private int getCountOfEventsInRange(int id1, int id2) {
         RBTree rbTree = RBTree.getInstance();
         ArrayList<Event> events = new ArrayList<>();
         return getEventsInRange(events, rbTree.root, id1, id2).size();
     }
 
-    public static Event getNextEvent(int id) {
+    private Event getNextEvent(int id) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
         if (node != null) {
@@ -81,7 +81,7 @@ public class Project {
         } else return null;
     }
 
-    public static Event getPreviousEvent(int id) {
+    private Event getPreviousEvent(int id) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
         if (node != null) {
@@ -95,7 +95,7 @@ public class Project {
             return null;
     }
 
-    public static Event[] readFile(String fileName) {
+    private Event[] readFile(String fileName) {
         Event[] events = null;
         try {
 
@@ -115,7 +115,7 @@ public class Project {
         return events;
     }
 
-    public void printConsole() {
+    private void printConsole() {
 
         System.out.println("For reference:");
         System.out.println("Command 'increase <int1> <int2>' increases the count of Event with ID int1 by int2 and prints the new count");
@@ -127,9 +127,12 @@ public class Project {
         System.out.println("Enter command 'quit' to exit the program");
 
         Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine();
-        String command = line.split(" ")[0];
+
         while (true) {
+
+
+            String line = scanner.nextLine();
+            String command = line.split(" ")[0];
             try {
                 switch (command) {
                     case "increase": {
@@ -174,8 +177,10 @@ public class Project {
                     case "quit": {
                         System.out.println("Exiting");
                         System.exit(0);
+                        break;
                     }
                 }
+                System.out.println("Enter another command");
             } catch (IndexOutOfBoundsException ex) {
                 System.out.println("Command arguments insufficient");
                 printConsole();
@@ -194,8 +199,8 @@ public class Project {
         } else {
             Project project = new Project();
             String fileToRead = args[0];
-            Event[] events = readFile(fileToRead);
-            initialize(events);
+            Event[] events = project.readFile(fileToRead);
+            project.initialize(events);
             System.out.println("Tree is ready. Input Command.");
             project.printConsole();
         }

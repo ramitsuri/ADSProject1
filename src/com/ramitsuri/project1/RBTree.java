@@ -310,16 +310,17 @@ public class RBTree {
             switch (choice) {
                 case 1:
                     item = scan.nextInt();
-                    while (item != -999) {
+                    *//*while (item != -999) {
                         node = new RBNode(new Event(item, item));
                         insert(node);
                         item = scan.nextInt();
                     }
-                    printTree(root);
+                    printTree(root);*//*
+                    System.out.println(item);
                     break;
                 case 2:
                     item = scan.nextInt();
-                    while (item != -999) {
+                    *//*while (item != -999) {
                         node = new RBNode(new Event(item, item));
                         System.out.print("\nDeleting item " + item);
                         if (deleteNodeWithID(node)) {
@@ -330,21 +331,24 @@ public class RBTree {
                         item = scan.nextInt();
                     }
                     System.out.println();
-                    printTree(root);
+                    printTree(root);*//*
+                    System.out.println(item);
                     break;
                 case 3:
                     item = scan.nextInt();
-                    while (item != -999) {
+                    *//*while (item != -999) {
                         node = new RBNode(new Event(item, item));
                         System.out.println((findNode(node, root) != null) ? "found" : "not found");
                         item = scan.nextInt();
-                    }
+                    }*//*
+                    System.out.println(item);
                     break;
                 case 4:
-                    printTree(root);
+                    *//*printTree(root);*//*
+                    System.out.println("4");
                     break;
                 case 5:
-                    deleteTree();
+                   *//* deleteTree();*//*
                     System.out.println("Tree deleted!");
                     break;
             }
@@ -353,11 +357,11 @@ public class RBTree {
 
 
     public static void main(String args[]){
-        *//*Event event = new Event(-1,0);
+        Event event = new Event(-1,0);
         final RBNode nil = new RBNode(event);
 
         RBNode nil2 = new RBNode(new Event(-1,0));
-        System.out.println(nil.compare(nil2));*//*
+        System.out.println(nil.compare(nil2));
 
         RBTree rbt = new RBTree();
         rbt.consoleUI();
