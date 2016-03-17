@@ -26,9 +26,9 @@ public class Project {
     public static int reduceCountForId(int id, int decreaseBy){
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
-        /*if((node.event.getCount() - decreaseBy) <= 0)
-            rbTree.deleteNode(node);
-        else*/
+        if((node.event.getCount() - decreaseBy) <= 0)
+            rbTree.deleteNodeWithID(id);
+        else
             node.setCountForEvent(node.event.count - decreaseBy);
         return node.event.getCount();
     }
@@ -64,7 +64,7 @@ public class Project {
         int newCount = increaseCountForId(12,3);
         int newCount2 = reduceCountForId(12,3);
         RBTree rbTree = RBTree.getInstance();
-        rbTree.delete(12);
+        rbTree.deleteNodeWithID(12);
         RBNode node = rbTree.findNode(12, rbTree.root);
         String a = "";
     }

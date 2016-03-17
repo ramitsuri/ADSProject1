@@ -179,7 +179,7 @@ public class RBTree {
         with.parent = target.parent;
     }
 
-    public boolean delete(int z){
+    public boolean deleteNodeWithID(int z){
         RBNode node = findNode(z, root);
         if(node == null)
             return false;
@@ -322,7 +322,7 @@ public class RBTree {
                     while (item != -999) {
                         node = new RBNode(new Event(item, item));
                         System.out.print("\nDeleting item " + item);
-                        if (delete(node)) {
+                        if (deleteNodeWithID(node)) {
                             System.out.print(": deleted!");
                         } else {
                             System.out.print(": does not exist!");
