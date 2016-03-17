@@ -70,6 +70,17 @@ public class Project {
         return node.event;
     }
 
+    public static Event getPreviousEvent(int id){
+        RBTree rbTree = RBTree.getInstance();
+        RBNode node = rbTree.findNode(id, rbTree.root);
+        node = node.left.right;
+        while(node.right!=null && node.right.event.ID != -1){
+            node = node.right;
+        }
+        String a = "";
+        return node.event;
+    }
+
     public static Event[] readFile(String fileName){
         Event[] events = null;
 
@@ -106,6 +117,7 @@ public class Project {
         //RBNode node = rbTree.findNode(12, rbTree.root);
         System.out.println(getCountOfEventsInRange(13,13));
         getNextEvent(87);
+        getPreviousEvent(87);
         String a = "";
     }
 
