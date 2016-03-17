@@ -9,31 +9,30 @@ import java.util.Scanner;
 public class RBTree {
 
     public static RBNode nil = new RBNode(new Event(-1,0));
-    private RBNode root = nil;
+    public RBNode root = nil;
     private static RBTree instance = null;
 
     public static RBTree getInstance(){
         if(instance == null)
-            return new RBTree();
-        else
-            return instance;
+            instance = new RBTree();
+        return instance;
     }
 
 
-    public RBNode findNode(RBNode findNode, RBNode node) {
+    public RBNode findNode(int id, RBNode node) {
         if (root == nil) {
             return null;
         }
 
-        if (findNode.event.ID < node.event.ID) {
+        if (id < node.event.ID) {
             if (node.left != nil) {
-                return findNode(findNode, node.left);
+                return findNode(id, node.left);
             }
-        } else if (findNode.event.ID > node.event.ID) {
+        } else if (id > node.event.ID) {
             if (node.right != nil) {
-                return findNode(findNode, node.right);
+                return findNode(id, node.right);
             }
-        } else if (findNode.event.ID == node.event.ID) {
+        } else if (id == node.event.ID) {
             return node;
         }
         return null;
@@ -73,7 +72,7 @@ public class RBTree {
 
 
 
-    public void fixTree(RBNode node) {
+   public void fixTree(RBNode node) {
         while (node.parent.color == Color.RED) {
             RBNode uncle = nil;
             if (node.parent == node.parent.parent.left) {
@@ -119,8 +118,7 @@ public class RBTree {
         }
         root.color = Color.BLACK;
     }
-
-    private void rotateLeft(RBNode node) {
+   private void rotateLeft(RBNode node) {
         if (node.parent != nil) {
             if (node == node.parent.left) {
                 node.parent.left = node.right;
@@ -170,7 +168,7 @@ public class RBTree {
             root = left;
         }
     }
-
+/*
     private void transplant(RBNode target, RBNode with){
         if(target.parent == nil){
             root = with;
@@ -292,7 +290,7 @@ public class RBTree {
             subTreeRoot = subTreeRoot.left;
         }
         return subTreeRoot;
-    }
+    }*/
 
 
     /*public void consoleUI() {

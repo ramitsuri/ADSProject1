@@ -36,4 +36,8 @@ public class RBNode {
         else
             return 0;
     }
+
+    public void setCountForEvent(int count){
+        this.event.setCount(count);
+    }
 }

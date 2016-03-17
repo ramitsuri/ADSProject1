@@ -1,13 +1,8 @@
 package com.ramitsuri.project1;
 
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.nio.file.Path;
-import java.security.KeyException;
-import java.security.PublicKey;
-import java.util.Map;
 
 /**
  * Created by ramitsuri on 3/15/16.
@@ -21,11 +16,22 @@ public class Project {
         }
     }
 
-    public void increaseID(int theID, int m){
+    public static int increaseCountForId(int id, int increaseBy){
         RBTree rbTree = RBTree.getInstance();
-
+        RBNode node = rbTree.findNode(id, rbTree.root);
+        node.setCountForEvent(node.event.count + increaseBy);
+        return node.event.getCount();
     }
 
+    public static int reduceCountForId(int id, int decreaseBy){
+        RBTree rbTree = RBTree.getInstance();
+        RBNode node = rbTree.findNode(id, rbTree.root);
+        /*if((node.event.getCount() - decreaseBy) <= 0)
+            rbTree.deleteNode(node);
+        else*/
+            node.setCountForEvent(node.event.count - decreaseBy);
+        return node.event.getCount();
+    }
 
     public static Event[] readFile(String fileName){
         Event[] events = null;
@@ -55,6 +61,9 @@ public class Project {
 
         Event [] events = readFile(args[0]);
         initialize(events);
+        int newCount = increaseCountForId(12,3);
+        int newCount2 = reduceCountForId(12,3);
+        String a = "";
     }
 
 }
