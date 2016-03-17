@@ -8,14 +8,15 @@ public class RBNode {
     public  RBNode left, right, parent;
     Event event = new Event(-1,0);
     boolean color;
+    public static RBNode nil = new RBNode(new Event(-1,0));
 
     public RBNode(Event event){
 
         this.color = Color.BLACK;
         this.event = event;
-        this.left = RBTree.nil;
-        this.right = RBTree.nil;
-        this.parent = RBTree.nil;
+        this.left = nil;
+        this.right = nil;
+        this.parent = nil;
 
     }
 

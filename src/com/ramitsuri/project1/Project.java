@@ -142,9 +142,8 @@ public class Project {
                         break;
                     }
                     case "reduce": {
-                        String input = line.split(" ")[1];
                         int id = Integer.parseInt(line.split(" ")[1]);
-                        int reduceBy = Integer.parseInt(input.split(" ")[1]);
+                        int reduceBy = Integer.parseInt(line.split(" ")[2]);
                         System.out.println(reduceCountForID(id, reduceBy));
                         break;
                     }
@@ -164,13 +163,15 @@ public class Project {
 
                     case "next": {
                         int id = Integer.parseInt(line.split(" ")[1]);
-                        System.out.println(getNextEvent(id));
+                        Event event = getNextEvent(id);
+                        System.out.println(event.ID + " " + event.count);
                         break;
                     }
 
                     case "previous": {
                         int id = Integer.parseInt(line.split(" ")[1]);
-                        System.out.println(getPreviousEvent(id));
+                        Event event = getPreviousEvent(id);
+                        System.out.println(event.ID + " " + event.count);
                         break;
                     }
 
