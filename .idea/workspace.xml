@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8bf1d8c0-5458-4b59-81cc-964bcf97b239" name="Default" comment="refactoring, RBTree program included, commands working.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ADSProject1/com/ramitsuri/project1/Project.class" afterPath="$PROJECT_DIR$/out/production/ADSProject1/com/ramitsuri/project1/Project.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ADSProject1/com/ramitsuri/project1/RBTree.class" afterPath="$PROJECT_DIR$/out/production/ADSProject1/com/ramitsuri/project1/RBTree.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ramitsuri/project1/Project.java" afterPath="$PROJECT_DIR$/src/com/ramitsuri/project1/Project.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ramitsuri/project1/RBTree.java" afterPath="$PROJECT_DIR$/src/com/ramitsuri/project1/RBTree.java" />
     </list>
     <list id="198d6bc5-6c3f-471f-960a-4556e30e57bb" name="Rejected commit: Default" comment="added Project file&#10;" />
@@ -32,12 +28,9 @@
       <file leaf-file-name="RBTree.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/ramitsuri/project1/RBTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.79140127">
-              <caret line="369" column="0" selection-start-line="369" selection-start-column="0" selection-end-line="369" selection-end-column="0" />
-              <folding>
-                <element signature="e#8994#8995#0" expanded="true" />
-                <element signature="e#9020#9021#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.62738854">
+              <caret line="271" column="4" selection-start-line="271" selection-start-column="4" selection-end-line="271" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -674,10 +667,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="293" column="25" selection-start-line="293" selection-start-column="25" selection-end-line="293" selection-end-column="25" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -719,10 +709,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="298" column="46" selection-start-line="298" selection-start-column="8" selection-end-line="298" selection-end-column="46" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -764,10 +751,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="181" column="25" selection-start-line="181" selection-start-column="25" selection-end-line="181" selection-end-column="25" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -809,10 +793,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -820,10 +801,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="181" column="23" selection-start-line="181" selection-start-column="19" selection-end-line="181" selection-end-column="23" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -865,10 +843,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="330" column="10" selection-start-line="330" selection-start-column="10" selection-end-line="330" selection-end-column="10" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -897,10 +872,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -940,10 +912,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="2" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -983,10 +952,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1066,12 +1032,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ramitsuri/project1/RBTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.79140127">
-          <caret line="369" column="0" selection-start-line="369" selection-start-column="0" selection-end-line="369" selection-end-column="0" />
-          <folding>
-            <element signature="e#8994#8995#0" expanded="true" />
-            <element signature="e#9020#9021#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.62738854">
+          <caret line="271" column="4" selection-start-line="271" selection-start-column="4" selection-end-line="271" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>

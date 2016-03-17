@@ -1,7 +1,4 @@
 package com.ramitsuri.project1;
-
-import java.util.Scanner;
-
 /**
  * Created by ramitsuri on 3/13/16.
  */
@@ -272,100 +269,11 @@ public class RBTree {
         }
         x.color = Color.BLACK;
     }
-
-    public void deleteTree(){
-        root = nil;
-    }
-
-
-    public void printTree(RBNode node) {
-        if (node == nil) {
-            return;
-        }
-        printTree(node.left);
-        System.out.print(((node.color==Color.RED)?"Color: Red ":"Color: Black ")+"Key: "+node.event.ID+" Parent: "+node.parent.event.ID+"\n");
-        printTree(node.right);
-    }
-
+    
     public RBNode treeMinimum(RBNode subTreeRoot){
         while(subTreeRoot.left!=nil){
             subTreeRoot = subTreeRoot.left;
         }
         return subTreeRoot;
     }
-
-
-    /*public void consoleUI() {
-        Scanner scan = new Scanner(System.in);
-        while (true) {
-            System.out.println("\n1.- Add items\n"
-                    + "2.- Delete items\n"
-                    + "3.- Check items\n"
-                    + "4.- Print tree\n"
-                    + "5.- Delete tree\n");
-            int choice = scan.nextInt();
-
-            int item;
-            RBNode node;
-            switch (choice) {
-                case 1:
-                    item = scan.nextInt();
-                    *//*while (item != -999) {
-                        node = new RBNode(new Event(item, item));
-                        insert(node);
-                        item = scan.nextInt();
-                    }
-                    printTree(root);*//*
-                    System.out.println(item);
-                    break;
-                case 2:
-                    item = scan.nextInt();
-                    *//*while (item != -999) {
-                        node = new RBNode(new Event(item, item));
-                        System.out.print("\nDeleting item " + item);
-                        if (deleteNodeWithID(node)) {
-                            System.out.print(": deleted!");
-                        } else {
-                            System.out.print(": does not exist!");
-                        }
-                        item = scan.nextInt();
-                    }
-                    System.out.println();
-                    printTree(root);*//*
-                    System.out.println(item);
-                    break;
-                case 3:
-                    item = scan.nextInt();
-                    *//*while (item != -999) {
-                        node = new RBNode(new Event(item, item));
-                        System.out.println((findNode(node, root) != null) ? "found" : "not found");
-                        item = scan.nextInt();
-                    }*//*
-                    System.out.println(item);
-                    break;
-                case 4:
-                    *//*printTree(root);*//*
-                    System.out.println("4");
-                    break;
-                case 5:
-                   *//* deleteTree();*//*
-                    System.out.println("Tree deleted!");
-                    break;
-            }
-        }
-    }
-
-
-    public static void main(String args[]){
-        Event event = new Event(-1,0);
-        final RBNode nil = new RBNode(event);
-
-        RBNode nil2 = new RBNode(new Event(-1,0));
-        System.out.println(nil.compare(nil2));
-
-        RBTree rbt = new RBTree();
-        rbt.consoleUI();
-
-    }*/
-
 }
