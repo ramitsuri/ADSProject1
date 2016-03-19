@@ -38,15 +38,15 @@ public class RBTree {
     public void insert(Event event) {
         RBNode node = new RBNode(event);
         RBNode temp = root;
-        if (root ==RBNode.nil) {
+        if (root == RBNode.nil) {
             root = node;
             node.color = Color.BLACK;
-            node.parent =RBNode.nil;
+            node.parent = RBNode.nil;
         } else {
             node.color = Color.RED;
             while (true) {
                 if (node.event.ID < temp.event.ID) {
-                    if (temp.left ==RBNode.nil) {
+                    if (temp.left == RBNode.nil) {
                         temp.left = node;
                         node.parent = temp;
                         break;
@@ -54,7 +54,7 @@ public class RBTree {
                         temp = temp.left;
                     }
                 } else if (node.event.ID >= temp.event.ID) {
-                    if (temp.right ==RBNode.nil) {
+                    if (temp.right == RBNode.nil) {
                         temp.right = node;
                         node.parent = temp;
                         break;
@@ -129,7 +129,7 @@ public class RBTree {
             }
             node.right = node.right.left;
             node.parent.left = node;
-        } else {//Need to rotate root
+        } else {
             RBNode right = root.right;
             root.right = right.left;
             right.left.parent = root;
@@ -155,7 +155,7 @@ public class RBTree {
             }
             node.left = node.left.right;
             node.parent.right = node;
-        } else {//Need to rotate root
+        } else {
             RBNode left = root.left;
             root.left = root.left.right;
             left.right.parent = root;
@@ -176,8 +176,8 @@ public class RBTree {
         with.parent = target.parent;
     }
 
-    public boolean deleteNodeWithID(int z){
-        RBNode node = findNode(z, root);
+    public boolean deleteNode(RBNode node){
+
         if(node == null)
             return false;
         RBNode x;
@@ -269,7 +269,6 @@ public class RBTree {
         }
         x.color = Color.BLACK;
     }
-
     public RBNode treeMinimum(RBNode subTreeRoot){
         while(subTreeRoot.left !=RBNode.nil){
             subTreeRoot = subTreeRoot.left;
