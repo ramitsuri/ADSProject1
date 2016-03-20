@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- * Created by ramitsuri on 3/13/16.
- */
-
 public class RBTree {
 
 
@@ -329,14 +325,14 @@ public class RBTree {
     private void colorNodes(RBNode root, boolean isLevelOneBlack){
         Queue<RBNode> queue = new LinkedList<>();
         queue.add(root);
-        root.color = Color.BLACK;
+        root.color = BLACK;
         while(!queue.isEmpty()){
             RBNode node = queue.poll();
             if(node.right!= nil && node.right!=null) {
                 queue.add(node.right);
                 node.right.parent = node;
                 if(isLevelOneBlack && node == root)
-                    node.right.color = Color.BLACK;
+                    node.right.color = BLACK;
                 else
                     node.right.color = !node.color;
             }
@@ -344,7 +340,7 @@ public class RBTree {
                 queue.add(node.left);
                 node.left.parent = node;
                 if(isLevelOneBlack && node == root)
-                    node.left.color = Color.BLACK;
+                    node.left.color = BLACK;
                 else
                     node.left.color = !node.color;
             }
