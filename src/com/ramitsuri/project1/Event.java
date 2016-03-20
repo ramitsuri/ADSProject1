@@ -2,9 +2,9 @@ package com.ramitsuri.project1;
 
 /**
  * Created by ramitsuri on 3/13/16.
+
  */
 public class Event {
-
     int ID;
     int count;
 
