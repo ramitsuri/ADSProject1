@@ -17,28 +17,28 @@ public class RBTree {
 
 
     public RBNode findNode(int id, RBNode node) {
-        if (root == RBNode.nil) {
-            return null;
+        if (root == RBNode.nil || root == null) {
+            return RBNode.nil;
         }
 
         if (id < node.event.ID) {
-            if (node.left != RBNode.nil) {
+            if (node.left != RBNode.nil && node.left != null) {
                 return findNode(id, node.left);
             }
         } else if (id > node.event.ID) {
-            if (node.right != RBNode.nil) {
+            if (node.right != RBNode.nil && node.right != null) {
                 return findNode(id, node.right);
             }
         } else if (id == node.event.ID) {
             return node;
         }
-        return null;
+        return RBNode.nil;
     }
 
     public void insert(Event event) {
         RBNode node = new RBNode(event);
         RBNode temp = root;
-        if (root == RBNode.nil) {
+        if (root == RBNode.nil || root == null) {
             root = node;
             node.color = Color.BLACK;
             node.parent = RBNode.nil;
@@ -46,7 +46,7 @@ public class RBTree {
             node.color = Color.RED;
             while (true) {
                 if (node.event.ID < temp.event.ID) {
-                    if (temp.left == RBNode.nil) {
+                    if (temp.left == RBNode.nil || temp.left == null) {
                         temp.left = node;
                         node.parent = temp;
                         break;
@@ -54,7 +54,7 @@ public class RBTree {
                         temp = temp.left;
                     }
                 } else if (node.event.ID >= temp.event.ID) {
-                    if (temp.right == RBNode.nil) {
+                    if (temp.right == RBNode.nil || temp.right == null) {
                         temp.right = node;
                         node.parent = temp;
                         break;
@@ -71,11 +71,11 @@ public class RBTree {
 
    public void fixTree(RBNode node) {
         while (node.parent.color == Color.RED) {
-            RBNode uncle =RBNode.nil;
+            RBNode uncle = RBNode.nil;
             if (node.parent == node.parent.parent.left) {
                 uncle = node.parent.parent.right;
 
-                if (uncle !=RBNode.nil && uncle.color == Color.RED) {
+                if ((uncle != RBNode.nil && uncle != null) && uncle.color == Color.RED) {
                     node.parent.color = Color.BLACK;
                     uncle.color = Color.BLACK;
                     node.parent.parent.color = Color.RED;
@@ -94,7 +94,7 @@ public class RBTree {
                 rotateRight(node.parent.parent);
             } else {
                 uncle = node.parent.parent.left;
-                if (uncle !=RBNode.nil && uncle.color == Color.RED) {
+                if ((uncle != RBNode.nil && uncle != null)  && uncle.color == Color.RED) {
                     node.parent.color = Color.BLACK;
                     uncle.color = Color.BLACK;
                     node.parent.parent.color = Color.RED;
@@ -116,7 +116,7 @@ public class RBTree {
         root.color = Color.BLACK;
     }
    private void rotateLeft(RBNode node) {
-        if (node.parent !=RBNode.nil) {
+        if (node.parent !=RBNode.nil && node.parent != null) {
             if (node == node.parent.left) {
                 node.parent.left = node.right;
             } else {
@@ -124,7 +124,7 @@ public class RBTree {
             }
             node.right.parent = node.parent;
             node.parent = node.right;
-            if (node.right.left !=RBNode.nil) {
+            if (node.right.left !=RBNode.nil && node.right.left != null) {
                 node.right.left.parent = node;
             }
             node.right = node.right.left;
@@ -141,7 +141,7 @@ public class RBTree {
     }
 
     private void rotateRight(RBNode node) {
-        if (node.parent !=RBNode.nil) {
+        if (node.parent !=RBNode.nil && node.parent != null) {
             if (node == node.parent.left) {
                 node.parent.left = node.left;
             } else {
@@ -150,7 +150,7 @@ public class RBTree {
 
             node.left.parent = node.parent;
             node.parent = node.left;
-            if (node.left.right !=RBNode.nil) {
+            if (node.left.right !=RBNode.nil && node.left.right != null) {
                 node.left.right.parent = node;
             }
             node.left = node.left.right;
@@ -167,7 +167,7 @@ public class RBTree {
     }
 
     private void transplant(RBNode target, RBNode with){
-        if(target.parent ==RBNode.nil){
+        if(target.parent ==RBNode.nil || target.parent == null){
             root = with;
         }else if(target == target.parent.left){
             target.parent.left = with;
@@ -178,16 +178,16 @@ public class RBTree {
 
     public boolean deleteNode(RBNode node){
 
-        if(node == null)
+        if(node == RBNode.nil || node == null)
             return false;
         RBNode x;
         RBNode y = node;
         boolean y_original_color = y.color;
 
-        if(node.left ==RBNode.nil){
+        if(node.left == RBNode.nil || node.left == null){
             x = node.right;
             transplant(node, node.right);
-        }else if(node.right ==RBNode.nil){
+        }else if(node.right ==RBNode.nil || node.right == null){
             x = node.left;
             transplant(node, node.left);
         }else{
@@ -269,8 +269,18 @@ public class RBTree {
         }
         x.color = Color.BLACK;
     }
+
+    public void printTree(RBNode node) {
+        if (node == RBNode.nil || node == null) {
+            return;
+        }
+        printTree(node.left);
+        System.out.print(((node.color==Color.RED)?"Color: Red ":"Color: Black ")+"ID: "+node.event.ID+" Parent: "+node.parent.event.ID+"\n");
+        printTree(node.right);
+    }
+
     public RBNode treeMinimum(RBNode subTreeRoot){
-        while(subTreeRoot.left !=RBNode.nil){
+        while(subTreeRoot.left !=RBNode.nil && subTreeRoot.left != null){
             subTreeRoot = subTreeRoot.left;
         }
         return subTreeRoot;

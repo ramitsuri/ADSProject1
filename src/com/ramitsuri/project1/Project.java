@@ -25,7 +25,6 @@ public class Project {
         if(findHeight(events.length)%2 == 0)
             isLevelOneBlack = false;
         colorNodes(rbTree.root, isLevelOneBlack);
-        String a = ";";
     }
 
     private RBNode recursiveInsert(Event[] events, int start, int end){
@@ -47,15 +46,17 @@ public class Project {
         root.color = Color.BLACK;
         while(!queue.isEmpty()){
             RBNode node = queue.poll();
-            if(node.right!=null) {
+            if(node.right!=RBNode.nil && node.right!=null) {
                 queue.add(node.right);
+                node.right.parent = node;
                 if(isLevelOneBlack && node == root)
                     node.right.color = Color.BLACK;
                 else
                     node.right.color = !node.color;
             }
-            if(node.left!=null) {
+            if(node.left!=RBNode.nil && node.left!=null) {
                 queue.add(node.left);
+                node.left.parent = node;
                 if(isLevelOneBlack && node == root)
                     node.left.color = Color.BLACK;
                 else
@@ -67,7 +68,7 @@ public class Project {
     private int increaseCountForID(int id, int increaseBy) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
-        if (node != null) {
+        if (node != RBNode.nil && node != null) {
             node.setCountForEvent(node.event.count + increaseBy);
             return node.event.getCount();
         }
@@ -80,7 +81,7 @@ public class Project {
     private int reduceCountForID(int id, int decreaseBy) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
-        if (node != null) {
+        if (node != RBNode.nil && node != null) {
             if ((node.event.getCount() - decreaseBy) <= 0) {
                 rbTree.deleteNode(node);
                 return 0;
@@ -96,7 +97,7 @@ public class Project {
     private int getCountForEventID(int id) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
-        if (node != null)
+        if (node != RBNode.nil && node != null)
             return node.event.getCount();
         else
             return 0;
@@ -104,7 +105,7 @@ public class Project {
 
     private ArrayList<Event> getEventsInRange(ArrayList<Event> events, RBNode node, int id1, int id2) {
 
-        if (node == null)
+        if (node == RBNode.nil || node == null)
             return events;
         if (id1 <= node.event.ID)
             getEventsInRange(events, node.left, id1, id2);
@@ -121,29 +122,77 @@ public class Project {
         return getEventsInRange(events, rbTree.root, id1, id2).size();
     }
 
+    private RBNode getNextNode(int id, RBNode node, RBNode bestUntilNow ) {
+        if(bestUntilNow.event.ID == -1 )
+            bestUntilNow = node;
+        if(node.event.ID > id && bestUntilNow.event.ID > node.event.ID)
+            bestUntilNow = node;
+        if(id < node.event.ID){
+            if(node.left != RBNode.nil && node.left != null)
+                return getNextNode(id, node.left, bestUntilNow);
+            else{
+                return node;
+            }
+        }
+        else {
+            if (node.right != RBNode.nil && node.right != null)
+                return getNextNode(id, node.right, bestUntilNow);
+            else if (node.event.ID <= id)
+                return bestUntilNow;
+            else
+                return node;
+        }
+    }
+
+    private RBNode getPreviousNode(int id, RBNode node, RBNode bestUntilNow ) {
+        if(node.event.ID < id && bestUntilNow.event.ID < node.event.ID)
+            bestUntilNow = node;
+        if(id > node.event.ID){
+            if(node.right != RBNode.nil && node.right != null)
+                return getPreviousNode(id, node.right, bestUntilNow);
+            else{
+                return node;
+            }
+        }
+        else {
+            if(node.left != RBNode.nil && node.left != null)
+                return getPreviousNode(id, node.left, bestUntilNow);
+            else if(node.event.ID >= id)
+                return bestUntilNow;
+            else
+                return node;
+        }
+    }
+
     private Event getNextEvent(int id) {
-        RBTree rbTree = RBTree.getInstance();
+        /*RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
-        if (node != null) {
+        if (node != RBNode.nil && node != null) {
             node = node.right.left;
-            while (node.left != null && node.left.event.ID != -1) {
+            while ((node.left != RBNode.nil && node.left != null) && node.left.event.ID != -1) {
                 node = node.left;
             }
             return node.event;
-        } else return null;
+        } else return null;*/
+        RBTree rbTree = RBTree.getInstance();
+        RBNode rbNode = getNextNode(id, rbTree.root, RBNode.nil);
+        return rbNode.event;
     }
 
     private Event getPreviousEvent(int id) {
-        RBTree rbTree = RBTree.getInstance();
+        /*RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
-        if (node != null) {
+        if (node != RBNode.nil && node != null) {
             node = node.left.right;
-            while (node.right != null && node.right.event.ID != -1) {
+            while ((node.right != RBNode.nil && node.right != null) && node.right.event.ID != -1) {
                 node = node.right;
             }
             return node.event;
         } else
-            return null;
+            return null;*/
+        RBTree rbTree = RBTree.getInstance();
+        RBNode rbNode = getPreviousNode(id, rbTree.root, RBNode.nil);
+        return rbNode.event;
     }
 
     private Event[] readFile(String fileName) {
@@ -235,7 +284,7 @@ public class Project {
                         break;
                     }
                 }
-                //RBTree.getInstance().printTree(RBTree.getInstance().root);
+                RBTree.getInstance().printTree(RBTree.getInstance().root);
                 //System.out.println("Enter another command");
             } catch (IndexOutOfBoundsException ex) {
                 System.out.println(ex.getCause());
@@ -254,8 +303,8 @@ public class Project {
             Project project = new Project();
             String fileToRead = args[0];
             Event[] events = project.readFile(fileToRead);
-            //project.initialize(events);
-            project.initializeWithSortedArray(events);
+            project.initialize(events);
+            //project.initializeWithSortedArray(events);
             RBTree rbTree = RBTree.getInstance();
             System.out.println("Tree is ready. Input Command.");
             project.printConsole();
