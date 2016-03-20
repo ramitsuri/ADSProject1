@@ -300,6 +300,13 @@ public class RBTree {
         return subTreeRoot;
     }
 
+    RBNode treeMaximum(RBNode subTreeRoot){
+        while(subTreeRoot.right!=nil){
+            subTreeRoot = subTreeRoot.right;
+        }
+        return subTreeRoot;
+    }
+
     public void initializeWithSortedArray(Event[] events){
 
         root = recursiveInsert(events, 0, events.length-1);
@@ -404,6 +411,8 @@ public class RBTree {
     }
 
     private RBNode getNextNode(int id, RBNode node, RBNode bestUntilNow ) {
+        if(id >= treeMaximum(root).event.ID)
+            return new RBNode(new Event(0,0));
         if(bestUntilNow.event.ID == -1 )
             bestUntilNow = node;
         if(node.event.ID > id && bestUntilNow.event.ID > node.event.ID)
@@ -426,6 +435,8 @@ public class RBTree {
     }
 
     private RBNode getPreviousNode(int id, RBNode node, RBNode bestUntilNow ) {
+        if(id <= treeMinimum(root).event.ID)
+            return new RBNode(new Event(0,0));
         if(node.event.ID < id && bestUntilNow.event.ID < node.event.ID)
             bestUntilNow = node;
         if(id > node.event.ID){

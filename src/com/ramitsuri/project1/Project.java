@@ -89,7 +89,6 @@ public class Project {
                     }
 
                     case "quit": {
-                        System.out.println("Exiting");
                         System.exit(0);
                         break;
                     }
