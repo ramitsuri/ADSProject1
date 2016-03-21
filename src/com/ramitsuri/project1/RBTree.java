@@ -321,14 +321,16 @@ public class RBTree {
     public void initializeWithSortedArray(Event[] events){
 
         boolean isLevelOneBlack = true;
+        int level = 0;
         if(findHeight(events.length)%2 == 0)
             isLevelOneBlack = false;
-        root = recursiveInsert(events, 0, events.length-1, isLevelOneBlack);
-        colorNodes(root, isLevelOneBlack);
+        root = recursiveInsert(events, 0, events.length-1, isLevelOneBlack, level);
+        root.color = BLACK;
+        //colorNodes(root, isLevelOneBlack);
     }
 
     // insert recursively the middle element from array and make elements on the eft as its left subtree and on right as right subtree
-    private RBNode recursiveInsert(Event[] events, int start, int end, boolean isLevelOneBlack){
+    private RBNode recursiveInsert(Event[] events, int start, int end, boolean isLevelOneBlack, int level){
         if(start > end){
             return nil;
         }
@@ -336,19 +338,22 @@ public class RBTree {
         RBNode node = new RBNode(events[mid]);
 
 
-        node.left = recursiveInsert(events, start, mid-1, isLevelOneBlack);
-        node.left.parent = node;
-       /* if(node.left.parent.parent.event.ID == -1 && isLevelOneBlack)
-            node.left.color = RED;
-        else*/
-            //node.left.color = !node.color;
-
-        node.right = recursiveInsert(events, mid+1, end, isLevelOneBlack);
-        node.right.parent = node;
-        /*if(node.right.parent.parent.event.ID == -1 && isLevelOneBlack)
-            node.right.color = RED;
-        else*/
-            //node.right.color = !node.color;
+        node.left = recursiveInsert(events, start, mid-1, isLevelOneBlack, level+1);
+        if(node.left != nil) {
+            node.left.parent = node;
+            if (isLevelOneBlack)
+                node.left.color = (level + 1) % 2 != 0; //set odd level BLACK when level 1 is BLACK
+            else
+                node.left.color = (level + 1) % 2 == 0; //set even level BLACK when level 1 is not BLACK
+        }
+        node.right = recursiveInsert(events, mid+1, end, isLevelOneBlack, level+1);
+        if(node.right != nil) {
+            node.right.parent = node;
+            if (isLevelOneBlack)
+                node.right.color = (level + 1) % 2 != 0; //set odd level BLACK when level 1 is BLACK
+            else
+                node.right.color = (level + 1) % 2 == 0; //set even level BLACK when level 1 is not BLACK
+        }
         return node;
     }
 

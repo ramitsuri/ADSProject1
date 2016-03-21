@@ -20,9 +20,9 @@ public class bbst {
                 events[i] = event;
             }
         } catch (FileNotFoundException ex) {
-            System.out.println("File Not Found");
+            //System.out.println("File Not Found");
         } catch (Exception ex) {
-            System.out.println("Error reading the file");
+            //System.out.println("Error reading the file");
         }
         return events;
     }
@@ -100,12 +100,12 @@ public class bbst {
                 //RBTree.getInstance().printTree(RBTree.getInstance().root);
                 //System.out.println("Enter another command");
             } catch (IndexOutOfBoundsException ex) {
-                System.out.println(ex.getCause());
+                //System.out.println(ex.getCause());
                 //printConsole();
             }
 
             catch(Exception ex){
-                System.out.println(ex.getCause());
+                //System.out.println(ex.getCause());
                 //printConsole();
             }
         }
