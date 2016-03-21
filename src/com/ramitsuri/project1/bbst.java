@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class Project {
+public class bbst {
 
+
+    //read file passed as command line argument and form an array of events
     private Event[] readFile(String fileName) {
         Event[] events = null;
         try {
@@ -25,6 +27,8 @@ public class Project {
         return events;
     }
 
+
+    //read commands from standard input, process them and send to the RedBlack Tree for execution
     private void printConsole() {
 /*
 
@@ -110,7 +114,7 @@ public class Project {
     public static void main(String args[]) {
         RBTree rbTree = RBTree.getInstance();
         if (args.length == 1) {
-            Project project = new Project();
+            bbst project = new bbst();
             String fileToRead = args[0];
             Event[] events = project.readFile(fileToRead);
             rbTree.initializeWithSortedArray(events);

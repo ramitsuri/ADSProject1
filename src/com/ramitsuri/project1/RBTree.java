@@ -34,6 +34,7 @@ public class RBTree {
     private final RBNode nil = new RBNode(new Event(-1,-1));
     public RBNode root = nil;
 
+    //print the tree structure, for debug purposes
     public void printTree(RBNode node) {
         if (node == nil) {
             return;
@@ -43,6 +44,7 @@ public class RBTree {
         printTree(node.right);
     }
 
+    // find a node using the event id
     private RBNode findNode(int id, RBNode node) {
         if (root == nil) {
             return null;
@@ -62,6 +64,7 @@ public class RBTree {
         return null;
     }
 
+    //insert a new event in the tree
     private void insert(Event event) {
         RBNode node = new RBNode(event);
         RBNode temp = root;
@@ -94,6 +97,7 @@ public class RBTree {
         }
     }
 
+    // fix the tree after an insert operation, ensuring Red Black tree properties
     private void fixTree(RBNode node) {
         while (node.parent.color == RED) {
             RBNode uncle = nil;
@@ -135,6 +139,7 @@ public class RBTree {
         root.color = BLACK;
     }
 
+    //rotate left to fix tree
     void rotateLeft(RBNode node) {
         if (node.parent != nil) {
             if (node == node.parent.left) {
@@ -159,7 +164,7 @@ public class RBTree {
             root = right;
         }
     }
-
+    //rotate right to fix tree
     void rotateRight(RBNode node) {
         if (node.parent != nil) {
             if (node == node.parent.left) {
@@ -186,11 +191,12 @@ public class RBTree {
         }
     }
 
-
+//delete tree, for debug
     void deleteTree(){
         root = nil;
     }
 
+    // transplant a node with another node
     void transplant(RBNode target, RBNode with){
         if(target.parent == nil){
             root = with;
@@ -201,8 +207,9 @@ public class RBTree {
         with.parent = target.parent;
     }
 
+    // delete a given node
     boolean deleteNode(RBNode node){
-        if(node ==null)return false;
+        if(node == null)return false;
         RBNode x;
         RBNode y = node;
         boolean y_original_color = y.color;
@@ -234,6 +241,7 @@ public class RBTree {
         return true;
     }
 
+    // fix tree after a delete operation, to maintain Red Black tree properties
     void deleteFixup(RBNode x){
         while(x!=root && x.color == BLACK){
             if(x == x.parent.left){
@@ -293,42 +301,63 @@ public class RBTree {
         x.color = BLACK;
     }
 
-    RBNode treeMinimum(RBNode subTreeRoot){
+    // find node with minimum event ID
+    private RBNode treeMinimum(RBNode subTreeRoot){
         while(subTreeRoot.left!=nil){
             subTreeRoot = subTreeRoot.left;
         }
         return subTreeRoot;
     }
 
-    RBNode treeMaximum(RBNode subTreeRoot){
+    // find node with max event ID
+    private RBNode treeMaximum(RBNode subTreeRoot){
         while(subTreeRoot.right!=nil){
             subTreeRoot = subTreeRoot.right;
         }
         return subTreeRoot;
     }
 
+    // initialize the tree using a sorted array
     public void initializeWithSortedArray(Event[] events){
 
-        root = recursiveInsert(events, 0, events.length-1);
         boolean isLevelOneBlack = true;
         if(findHeight(events.length)%2 == 0)
             isLevelOneBlack = false;
+        root = recursiveInsert(events, 0, events.length-1, isLevelOneBlack);
         colorNodes(root, isLevelOneBlack);
     }
 
-    private RBNode recursiveInsert(Event[] events, int start, int end){
+    // insert recursively the middle element from array and make elements on the eft as its left subtree and on right as right subtree
+    private RBNode recursiveInsert(Event[] events, int start, int end, boolean isLevelOneBlack){
         if(start > end){
             return nil;
         }
-        int mid = (start+end)/2;
+        int mid = end - (end - start)/2;
         RBNode node = new RBNode(events[mid]);
-        node.left = recursiveInsert(events, start, mid-1);
-        node.right = recursiveInsert(events, mid+1, end);
+
+
+        node.left = recursiveInsert(events, start, mid-1, isLevelOneBlack);
+        node.left.parent = node;
+       /* if(node.left.parent.parent.event.ID == -1 && isLevelOneBlack)
+            node.left.color = RED;
+        else*/
+            //node.left.color = !node.color;
+
+        node.right = recursiveInsert(events, mid+1, end, isLevelOneBlack);
+        node.right.parent = node;
+        /*if(node.right.parent.parent.event.ID == -1 && isLevelOneBlack)
+            node.right.color = RED;
+        else*/
+            //node.right.color = !node.color;
         return node;
     }
+
+    // find height of the tree using the number of nodes in the tree
     private double findHeight(int numberOfNodes){
         return (Math.ceil(Math.log(numberOfNodes+1)/Math.log(2)));
     }
+
+    //color the nodes iteratively after insertion into BST
     private void colorNodes(RBNode root, boolean isLevelOneBlack){
         Queue<RBNode> queue = new LinkedList<>();
         queue.add(root);
@@ -337,7 +366,7 @@ public class RBTree {
             RBNode node = queue.poll();
             if(node.right!= nil && node.right!=null) {
                 queue.add(node.right);
-                node.right.parent = node;
+                //node.right.parent = node;
                 if(isLevelOneBlack && node == root)
                     node.right.color = BLACK;
                 else
@@ -345,7 +374,7 @@ public class RBTree {
             }
             if(node.left!= nil && node.left!=null) {
                 queue.add(node.left);
-                node.left.parent = node;
+                //node.left.parent = node;
                 if(isLevelOneBlack && node == root)
                     node.left.color = BLACK;
                 else
@@ -354,6 +383,7 @@ public class RBTree {
         }
     }
 
+    // increase the count for an event, or insert if the Event is not present
     public int increaseCountForID(int id, int increaseBy) {
         RBNode node = findNode(id, root);
     if (node != null) {
@@ -365,7 +395,7 @@ public class RBTree {
             return increaseBy;
         }
     }
-
+    // decrease the count for an event, or delete if the Event count <0
     public int reduceCountForID(int id, int decreaseBy) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
@@ -382,6 +412,7 @@ public class RBTree {
             return 0;
     }
 
+    // get count for en event given its ID
     public int getCountForEventID(int id) {
         RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
@@ -391,27 +422,30 @@ public class RBTree {
             return 0;
     }
 
-    private ArrayList<Event> getEventsInRange(ArrayList<Event> events, RBNode node, int id1, int id2) {
+    // get events in range
+    private int getEventsInRange(RBNode node, int id1, int id2) {
 
         if (node == nil || node == null)
-            return events;
-        if (id1 <= node.event.ID)
-            getEventsInRange(events, node.left, id1, id2);
+            return 0;
         if (id1 <= node.event.ID && node.event.ID <= id2)
-            events.add(node.event);
-        if (node.event.ID <= id2)
-            getEventsInRange(events, node.right, id1, id2);
-        return events;
+            return node.event.getCount() + getEventsInRange(node.left, id1, id2) + getEventsInRange(node.right, id1, id2);
+
+        else if (id1 > node.event.ID)
+            return getEventsInRange(node.right, id1, id2);
+
+        else
+            return getEventsInRange(node.left, id1, id2);
     }
 
+    // get count for events in range
     public int getCountOfEventsInRange(int id1, int id2) {
         RBTree rbTree = RBTree.getInstance();
-        ArrayList<Event> events = new ArrayList<>();
-        return getEventsInRange(events, rbTree.root, id1, id2).size();
+        return getEventsInRange(rbTree.root, id1, id2);
     }
 
-    private RBNode getNextNode(int id, RBNode node, RBNode bestUntilNow ) {
-        if(id >= treeMaximum(root).event.ID)
+    // get next node of an Event with given ID
+    private RBNode getNextNode(int id, RBNode node, RBNode bestUntilNow, RBNode max) {
+        if(id >= max.event.ID)
             return new RBNode(new Event(0,0));
         if(bestUntilNow.event.ID == -1 )
             bestUntilNow = node;
@@ -419,14 +453,14 @@ public class RBTree {
             bestUntilNow = node;
         if(id < node.event.ID){
             if(node.left != nil && node.left != null)
-                return getNextNode(id, node.left, bestUntilNow);
+                return getNextNode(id, node.left, bestUntilNow, max);
             else{
                 return node;
             }
         }
         else {
             if (node.right != nil && node.right != null)
-                return getNextNode(id, node.right, bestUntilNow);
+                return getNextNode(id, node.right, bestUntilNow, max);
             else if (node.event.ID <= id)
                 return bestUntilNow;
             else
@@ -434,21 +468,22 @@ public class RBTree {
         }
     }
 
-    private RBNode getPreviousNode(int id, RBNode node, RBNode bestUntilNow ) {
-        if(id <= treeMinimum(root).event.ID)
+    // get previous node of an Event with given ID
+    private RBNode getPreviousNode(int id, RBNode node, RBNode bestUntilNow, RBNode min) {
+        if(id <= min.event.ID)
             return new RBNode(new Event(0,0));
         if(node.event.ID < id && bestUntilNow.event.ID < node.event.ID)
             bestUntilNow = node;
         if(id > node.event.ID){
             if(node.right != nil && node.right != null)
-                return getPreviousNode(id, node.right, bestUntilNow);
+                return getPreviousNode(id, node.right, bestUntilNow, min);
             else{
                 return node;
             }
         }
         else {
             if(node.left != nil && node.left != null)
-                return getPreviousNode(id, node.left, bestUntilNow);
+                return getPreviousNode(id, node.left, bestUntilNow, min);
             else if(node.event.ID >= id)
                 return bestUntilNow;
             else
@@ -456,6 +491,7 @@ public class RBTree {
         }
     }
 
+    // get next event with given ID or 0 0 if not present
     public Event getNextEvent(int id) {
         /*RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
@@ -466,10 +502,12 @@ public class RBTree {
             }
             return node.event;
         } else return null;*/
-        RBNode rbNode = getNextNode(id, root, nil);
+        RBNode maxNode = treeMaximum(root);
+        RBNode rbNode = getNextNode(id, root, nil, maxNode);
         return rbNode.event;
     }
 
+    // get previous event with given ID or 0 0 if not present
     public Event getPreviousEvent(int id) {
         /*RBTree rbTree = RBTree.getInstance();
         RBNode node = rbTree.findNode(id, rbTree.root);
@@ -481,7 +519,8 @@ public class RBTree {
             return node.event;
         } else
             return null;*/
-        RBNode rbNode = getPreviousNode(id, root, nil);
+        RBNode minNode = treeMinimum(root);
+        RBNode rbNode = getPreviousNode(id, root, nil, minNode);
         return rbNode.event;
     }
 }
